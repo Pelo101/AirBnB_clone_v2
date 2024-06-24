@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] is '{' and pline[-1] is '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -114,47 +114,51 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-	"""split the arguments"""
-	args = arg.split()
+    """ Create an object of any class"""
+	args = args.split()
 
-        """ Create an object of any class"""
         if not args:
             print("** class name missing **")
             return
+
         class_naame = args.pop(0)
 	if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
-          
+            return
+
 	"""Create an instance of the class"""
         new_instance = HBNBCommand.classes[class_name]()
 
+
 	"""Traverse the arguments for key and value pair"""
 	for param in args:
-	    key_value = param.split('=', )
-	    if len(key_value) > 2:
+	    key_value = param.split('=', 1)
+	    if len(key_value) != 2:
 	       continue
 
-	    if  args[0] == '"' and args[-1] == '"'
-	"""Extract the value """
-		value = args[1: -1]
-		value = replace('"', '/')
+           key , value = key_value
 
-	"""Check if value is a float or integer"""
+           """Process the value"""
+	    if  value.startswith('"') and value.endswith('"'):
+                value = value[1: -1].replace('_', ' ').replace('\\"', '"')
 
-	    if '.' in value:
-		try:
-		    value = float(value)
+            else:
+                try:
+    	            if '.' in value:
+		
+		        value = float(value)
+	    
+	            else:
+	    
+		        value = int(value)
 		except ValueError:
 		    continue
-	    else:
-		try:
-		    value = int(value)
-		except ValueError:
-		    continue
+
+
 	 """Set attributes on the instance"""
 	 setattr(new_instance, key, value)
 
-	 """Save the instance and print its ID"""
+	"""Save the instance and print its ID"""
 	new_instance.save()
         print(new_instance.id)
         
