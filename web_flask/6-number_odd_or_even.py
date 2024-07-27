@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-"""Script that starts a Flask web application"""
+"""script that starts a Flask web application"""
 
 from flask import Flask
+from flask import render_template
 app = Flask(__name__)
 
 
@@ -36,6 +37,30 @@ def python_default():
     """Displays python default text"""
     default_text = 'is cool'
     return "Python {}".format(default_text)
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
+def number(n):
+    """Prints integer"""
+    return "{:d} is a number".format(n)
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def num_templates(n):
+    """Displays templates"""
+    return render_template('5-number.html', n=n)
+
+
+@app.route('/number_odd_or_even/<int:n>',  strict_slashes=False)
+def odd_even(n):
+    """Display html template"""
+    if n % 2 == 0:
+        OddEven = 'even'
+
+    else:
+        OddEven = 'odd'
+
+    return render_template('6-number_odd_or_even.html', n=n, OddEven=OddEven)
 
 
 if __name__ == '__main__':
