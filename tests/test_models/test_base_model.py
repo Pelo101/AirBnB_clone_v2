@@ -24,7 +24,7 @@ class test_basemodel(unittest.TestCase):
     def tearDown(self):
         try:
             os.remove('file.json')
-        except:
+        except FileNotFoundError:
             pass
 
     def test_default(self):
@@ -65,8 +65,13 @@ class test_basemodel(unittest.TestCase):
     def test_todict(self):
         """ """
         i = self.value()
-        n = i.to_dict()
-        self.assertEqual(i.to_dict(), n)
+        dict_repr = i.to_dict()
+
+        self.assertEqual(dict_repr, i.to_dict())
+
+        if '_sa_instance_state' in dict_repr:
+            dict_repr.pop('_sa_instance_state')
+            self.assertNotIn('_sa_instance_state', dict_repr)
 
     def test_kwargs_none(self):
         """ """
@@ -97,3 +102,12 @@ class test_basemodel(unittest.TestCase):
         n = new.to_dict()
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
+
+    def test_delete(self):
+        """ """
+        new = self.value()
+        new.save()
+        self.assertIn(new.id, storage.all(BaseModel))I
+
+        new.delete()
+        self.assertNot(new.id, storage.all(BaseModel))
