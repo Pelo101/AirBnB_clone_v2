@@ -107,7 +107,7 @@ class test_basemodel(unittest.TestCase):
         """ """
         new = self.value()
         new.save()
-        self.assertIn(new.id, storage.all(BaseModel))I
+        self.assertIn(new.id, storage.all(BaseModel))
 
         new.delete()
         self.assertNot(new.id, storage.all(BaseModel))
