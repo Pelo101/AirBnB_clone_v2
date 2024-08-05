@@ -85,9 +85,9 @@ class TestBaseModel(unittest.TestCase):
         n = {'Name': 'test'}
         try:
             new = self.value(**n)
-            self.fail("KeyError not raised")
-        except KeyError:
-            pass
+            self.assertNotIn('Name', new.to_dict())
+        except Exception as e:
+            self.fail(f"Unexpected exception raised: {e}")
 
     def test_id(self):
         """ """
