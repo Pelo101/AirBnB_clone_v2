@@ -22,9 +22,15 @@ class BaseModel:
         if 'id' not in kwargs:
             self.id = str(uuid.uuid4())
         if 'created_at' not in kwargs:
+            self.created_at = kwargs['created_at']
+
+        else:
             self.created_at = datetime.utcnow()
 
         if 'updated_at' not in kwargs:
+            self.updated_at = kwargs['updated_at']
+
+        else:
             self.updated_at = datetime.utcnow()
 
         if kwargs:
