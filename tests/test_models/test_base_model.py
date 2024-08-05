@@ -83,8 +83,11 @@ class TestBaseModel(unittest.TestCase):
     def test_kwargs_one(self):
         """ """
         n = {'Name': 'test'}
-        with self.assertRaises(KeyError):
+        try:
             new = self.value(**n)
+            self.fail("KeyError not raised")
+        except KeyError:
+            pass
 
     def test_id(self):
         """ """
@@ -108,7 +111,7 @@ class TestBaseModel(unittest.TestCase):
         """ """
 
         obj1 = self.value()
-        obj.id = '3341544b-43a8-4ac0-a5f4-c4003f6325dc'
+        obj1.id = '3341544b-43a8-4ac0-a5f4-c4003f6325dc'
 
         storage.new(obj1)
         storage.save()
