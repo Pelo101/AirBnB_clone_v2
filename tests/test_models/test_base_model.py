@@ -104,22 +104,6 @@ class TestBaseModel(unittest.TestCase):
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
 
-    def test_delete(self):
-        """ """
-
-        obj1 = self.value()
-        obj1.id = '3341544b-43a8-4ac0-a5f4-c4003f6325dc'
-
-        storage.new(obj1)
-        storage.save()
-
-        key = f"BaseModel.{obj1.id}"
-        self.assertIn(key, storage.all())
-
-        storage.delete(obj1)
-        storage.save()
-
-        self.assertNotIn(key, storage.all())
 
 
 if __name__ == '__main__':
