@@ -49,9 +49,8 @@ class FileStorage:
 
     def reload(self):
         """Loads storage file"""
-
+    if os.path.exists(FileStorage.__file_path):
         try:
-            temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
@@ -61,9 +60,12 @@ class FileStorage:
                             val['created_at'])
                         val['updated_at'] = datetime.fromisoformat(
                             val['updated_at'])
-                    self.__objects[key] = classes[cls_name](**val)
+                        self.__objects[key] = classes[cls_name](**val)
         except (json.JSONDecodeError, KeyError) as e:
             print(f"Error loading file: {e}")
+    else:
+        with open(FileStorage.__file_path, 'w') as f:
+            json.dump({}, f)
 
     def delete(self, obj=None):
         """Deletes objects"""
