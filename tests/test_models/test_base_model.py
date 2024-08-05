@@ -86,8 +86,7 @@ class TestBaseModel(unittest.TestCase):
         try:
             new = self.value(**n)
             self.assertNotIn('Name', new.to_dict())
-        except Exception as e:
-            self.fail(f"Unexpected exception raised: {e}")
+       	self.assertEqual(new.to_dict()['Name'], 'test')
 
     def test_id(self):
         """ """
