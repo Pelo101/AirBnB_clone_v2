@@ -69,7 +69,7 @@ class FileStorage:
 
         if obj is not None:
 
-            obj_key = f"{obj.__class__.__name__.{obj.id}"
+            obj_key = f"{obj.__class__.__name__}.{obj.id}"
 
             if obj_key in self.__objects:
 
