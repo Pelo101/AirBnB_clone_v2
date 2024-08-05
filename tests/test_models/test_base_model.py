@@ -61,7 +61,7 @@ class TestBaseModel(unittest.TestCase):
         """ """
         i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
-                         i.__dict__))
+                                                       i.__dict__))
 
     def test_todict(self):
         """ """
@@ -106,9 +106,22 @@ class TestBaseModel(unittest.TestCase):
 
     def test_delete(self):
         """ """
-        new = self.value()
-        new.save()
-        self.assertIn(new.id, storage.all(BaseModel))
 
-        new.delete()
-        self.assertNot(new.id, storage.all(BaseModel))
+        storage = FileStorage()
+        obj1 = self.value()
+        obj.id = '3341544b-43a8-4ac0-a5f4-c4003f6325dc'
+
+        storage.new(obj1)
+        storage.save()
+
+        key = f"BaseModel.{obj1.id}"
+        self.assertIn(key, storage.all())
+
+        storage.delete(obj1)
+        storage.save()
+
+        self.assertNotIn(key, storage.all())
+
+
+if __name__ == '__main__':
+    unittest.main()
