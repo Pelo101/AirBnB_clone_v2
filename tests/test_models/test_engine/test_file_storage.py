@@ -87,7 +87,7 @@ class test_fileStorage(unittest.TestCase):
 
     def test_reload_empty(self):
         """ Load from an empty file """
-    storage.reload()
+        storage.reload()
 
     with self.assertRaises(ValueError):
         storage.reload()
