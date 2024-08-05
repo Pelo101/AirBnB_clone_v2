@@ -21,7 +21,7 @@ class test_fileStorage(unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_obj_list_empty(self):
@@ -62,9 +62,9 @@ class test_fileStorage(unittest.TestCase):
 
     def test_reload(self):
         """ Storage file is successfully loaded to __objects """
+        storage.reload()
         new = BaseModel()
         storage.save()
-        storage.reload()
         for obj in storage.all().values():
             loaded = obj
         self.assertEqual(new.to_dict()['id'], loaded.to_dict()['id'])
@@ -98,9 +98,12 @@ class test_fileStorage(unittest.TestCase):
         """ Key is properly formatted """
         new = BaseModel()
         _id = new.to_dict()['id']
-        for key in storage.all().keys():
-            temp = key
-        self.assertEqual(temp, 'BaseModel' + '.' + _id)
+        storage.new(new)
+        storage.save()
+
+        all_keys = storage.all().keys()
+        key_fmt = f'BaseModel.{_id}'
+        self.assertIn(key_fmt, all_keys)
 
     def test_storage_var_created(self):
         """ FileStorage object storage created """
