@@ -90,7 +90,7 @@ class test_fileStorage(unittest.TestCase):
         storage.reload()
 
         with self.assertRaises(ValueError):
-        storage.reload()
+            storage.reload()
 
     def test_reload_from_nonexistent(self):
         """ Nothing happens if file does not exist """
