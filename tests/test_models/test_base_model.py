@@ -83,10 +83,8 @@ class TestBaseModel(unittest.TestCase):
     def test_kwargs_one(self):
         """ """
         n = {'Name': 'test'}
-        try:
-            new = self.value(**n)
-            self.assertNotIn('Name', new.to_dict())
-       	self.assertEqual(new.to_dict()['Name'], 'test')
+        new = self.value(**n)
+        self.assertEqual(new.to_dict()['Name'], 'test')
 
     def test_id(self):
         """ """
