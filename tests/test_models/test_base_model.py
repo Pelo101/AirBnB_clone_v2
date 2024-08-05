@@ -107,7 +107,6 @@ class TestBaseModel(unittest.TestCase):
     def test_delete(self):
         """ """
 
-        storage = FileStorage()
         obj1 = self.value()
         obj.id = '3341544b-43a8-4ac0-a5f4-c4003f6325dc'
 
