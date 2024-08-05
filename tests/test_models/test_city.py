@@ -16,7 +16,7 @@ class test_City(TestBaseModel):
     def test_state_id(self):
         """ """
         new = self.value()
-        print(f"state_id type: {type(new.state_id}")
+        print(f"state_id type: {type(new.state_id})")
         self.assertEqual(type(new.state_id), str)
 
     def test_name(self):
